@@ -6,13 +6,6 @@ public class InputManager : MonoBehaviour
 {
     public GameState state;
 
-    private UIManager UI;
-    private GameInput game;
-    private DialogueManager dialogue;
-    private Pause pause;
-    private PuzzleManager puzzle;
-
-
     public enum GameState
     {
         UI,
