@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     // Dialogue
     private Image dialogue_Background;
 
+    // Pause Menu
+    private GameObject pause_Menu;
+
     // Puzzles
     private GameObject puzzle_KeycodeParent;
 
@@ -46,6 +49,9 @@ public class UIManager : MonoBehaviour
 
         // Overlay
         global_Overlay = GameObject.Find("global_Overlay").GetComponent<Image>();
+
+        // Pause Menu
+        pause_Menu = GameObject.Find("pause_Menu");
 
         // Dialogue
         dialogue_Background = GameObject.Find("dialogue_Background").GetComponent<Image>();
@@ -100,8 +106,14 @@ public class UIManager : MonoBehaviour
     public void ToggleDialogue()
     {
         bool isOpen = (dialogue_Background.color.a != 0) ? true : false;
-        if (isOpen) dialogue_Background.color = Color.Lerp(a_full, a_zero, Time.deltaTime * 1f);
-        else dialogue_Background.color = Color.Lerp(a_zero, a_full, Time.deltaTime * 1f);
+        if (isOpen) LeanTween.alpha(dialogue_Background.gameObject, 1f, 0.3f).setEase(LeanTweenType.easeOutQuad);
+        else LeanTween.alpha(dialogue_Background.gameObject, 1f, 0.3f).setEase(LeanTweenType.easeOutQuad); ;
+    }
+
+    public void TogglePause()
+    {
+        if (pause_Menu.activeSelf) pause_Menu.SetActive(false);
+        else pause_Menu.SetActive(true);
     }
 
 
