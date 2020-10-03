@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 
     private UIManager UI;
     private GameInput game;
-    private Dialogue dialogue;
+    private DialogueManager dialogue;
     private Pause pause;
     private Puzzle puzzle;
 
