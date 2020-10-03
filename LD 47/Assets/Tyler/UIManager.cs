@@ -15,8 +15,14 @@ public class UIManager : MonoBehaviour
     private Button menu_OptionsButton;
     private Button menu_QuitButton;
 
+    private Transform menu_RoomModel;
+    private bool menuLoaded;
+
     // Dialogue
     private Image dialogue_Background;
+
+    // Puzzles
+    private GameObject puzzle_KeycodeParent;
 
     // Colors for alpha fade
     private Color a_zero;
@@ -31,15 +37,33 @@ public class UIManager : MonoBehaviour
         menu_OptionsButton = menu_ButtonsParent.GetChild(1).GetComponent<Button>();
         menu_QuitButton = menu_ButtonsParent.GetChild(2).GetComponent<Button>();
 
+        menu_RoomModel = GameObject.Find("menu_RoomModel").transform;
+        menuLoaded = false;
+
         // Overlay
         global_Overlay = GameObject.Find("global_Overlay").GetComponent<Image>();
 
         // Dialogue
         dialogue_Background = GameObject.Find("dialogue_Background").GetComponent<Image>();
 
+        // Puzzles
+        puzzle_KeycodeParent = GameObject.Find("puzzle_KeycodeParent");
+
         // Colors
         a_zero = new Color(0, 0, 0, 0);
         a_full = new Color(0, 0, 0, 255);
+
+        // Init Menu
+        LoadMenu();
+    }
+
+    private void Update()
+    {
+        if (menuLoaded)
+        {
+            // Rotate the room model on the X axis
+            menu_RoomModel.transform.Rotate(0, 2f * Time.deltaTime, 0);
+        }
     }
 
     public IEnumerator TakeToScene(string sceneName)
@@ -54,9 +78,15 @@ public class UIManager : MonoBehaviour
 
     public void LoadMenu()
     {
-        Vector3 currentPosition = menu_ButtonsParent.position;
-        Vector3 destinationPosition = new Vector3(currentPosition.x + 300, currentPosition.y, currentPosition.z);
-        menu_ButtonsParent.position = Vector3.Lerp(currentPosition, destinationPosition, Time.deltaTime * 1f);
+        // Move the buttons in
+        Vector3 b_currentPosition = menu_ButtonsParent.position;
+        LeanTween.move(menu_ButtonsParent.gameObject, new Vector3(200f, b_currentPosition.y, b_currentPosition.z), 1f).setEase(LeanTweenType.easeInQuad);
+
+        // Move the model in
+        Vector3 m_currentPosition = menu_RoomModel.position;
+        LeanTween.move(menu_RoomModel.gameObject, new Vector3(m_currentPosition.x, -5f, m_currentPosition.z), 1f).setEase(LeanTweenType.easeInQuad);
+
+        menuLoaded = true;
     }
 
     public void ToggleDialogue()

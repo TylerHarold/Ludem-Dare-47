@@ -7,8 +7,9 @@ public class DialogueManager : MonoBehaviour
 {
 
     private UIManager ui;
+    private InputManager input;
 
-    public Text dText;
+    private Text dText;
 
     private Queue<string> sentences;
 
@@ -16,10 +17,16 @@ public class DialogueManager : MonoBehaviour
     {
         sentences = new Queue<string>();
         ui = FindObjectOfType<UIManager>();
+
+        dText = GameObject.Find("dialogue_Text").GetComponent<Text>();
+        input = FindObjectOfType<InputManager>();
     }
 
     public void StartDialogue(DialogueObj dialogue)
     {
+        // Set input to Dialogue
+        input.state = InputManager.GameState.DIALOGUE;
+
         // Toggle the background
         ui.ToggleDialogue();
 
@@ -37,15 +44,26 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplaySentence()
     {
-        if (sentences.Count == 0)
+        if (input.state == InputManager.GameState.DIALOGUE)
         {
-            // Toggle the dialogue
+            if (sentences.Count == 0)
+            {
+                // Toggle the dialogue
+                ui.ToggleDialogue();
+                return;
+            }
+
+            string sentence = sentences.Dequeue();
+
+            StopAllCoroutines();
+            StartCoroutine(TypeSentence(sentence));
+
+        } else
+        {
             ui.ToggleDialogue();
             return;
         }
-        string sentence = sentences.Dequeue();
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(sentence));
+
     }
 
     public IEnumerator TypeSentence(string sentence)

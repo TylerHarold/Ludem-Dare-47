@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     private GameInput game;
     private DialogueManager dialogue;
     private Pause pause;
-    private Puzzle puzzle;
+    private PuzzleManager puzzle;
 
 
     public enum GameState
