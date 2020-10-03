@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+
+    // Input Manager
+    private InputManager input;
+
     // Black Overlay (Used for transition between scenes)
     private Image global_Overlay;
 
@@ -27,7 +31,9 @@ public class UIManager : MonoBehaviour
     private GameObject pause_Menu;
 
     // Puzzles
-    private GameObject puzzle_KeycodeParent;
+    private GameObject keycode_Parent;
+    private GameObject keycode_ButtonsParent;
+    private Text keycode_Text;
 
     // Colors for alpha fade
     private Color a_zero;
@@ -36,6 +42,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        // Input Manager
+        input = FindObjectOfType<InputManager>();
+
         // Menu
         menu_ButtonsParent = GameObject.Find("menu_ButtonsParent").transform;
         menu_PlayButton = menu_ButtonsParent.GetChild(0).GetComponent<Button>();
@@ -56,8 +65,8 @@ public class UIManager : MonoBehaviour
         // Dialogue
         dialogue_Background = GameObject.Find("dialogue_Background").GetComponent<Image>();
 
-        // Puzzles
-        puzzle_KeycodeParent = GameObject.Find("puzzle_KeycodeParent");
+        // Keycode
+        keycode_Parent = GameObject.Find("keycode_Parent");
 
         // Colors
         a_zero = new Color(0, 0, 0, 0);
@@ -74,6 +83,13 @@ public class UIManager : MonoBehaviour
             // Rotate the room model on the X axis
             menu_RoomModel.transform.Rotate(0, 2f * Time.deltaTime, 0);
         }
+
+        // Toggle Pause
+        if (input.state == InputManager.GameState.GAME)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) TogglePause();
+        }
+
     }
 
     public IEnumerator TakeToScene(string sceneName)
@@ -112,8 +128,25 @@ public class UIManager : MonoBehaviour
 
     public void TogglePause()
     {
-        if (pause_Menu.activeSelf) pause_Menu.SetActive(false);
-        else pause_Menu.SetActive(true);
+        if (!pause_Menu.activeSelf)
+        {
+            // Set the pause menu game object to active
+            pause_Menu.SetActive(true);
+            // While the object is active, we are going to set the game state to pause, then
+            // make sure that the player is unable to move
+            input.state = InputManager.GameState.PAUSE;
+        }
+        else
+        {
+            pause_Menu.SetActive(false);
+        }
+    }
+
+    public void ToggleKeycodePuzzle()
+    {
+        // No need to check for input state here
+        if (!keycode_Parent.activeSelf) keycode_Parent.SetActive(true);
+        else keycode_Parent.SetActive(false);
     }
 
 
