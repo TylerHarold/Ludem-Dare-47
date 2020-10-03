@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     private Button menu_OptionsButton;
     private Button menu_QuitButton;
 
+    private Transform menu_Logo;
+
     private Transform menu_RoomModel;
     private bool menuLoaded;
 
@@ -36,6 +38,8 @@ public class UIManager : MonoBehaviour
         menu_PlayButton = menu_ButtonsParent.GetChild(0).GetComponent<Button>();
         menu_OptionsButton = menu_ButtonsParent.GetChild(1).GetComponent<Button>();
         menu_QuitButton = menu_ButtonsParent.GetChild(2).GetComponent<Button>();
+
+        menu_Logo = GameObject.Find("Logo").transform;
 
         menu_RoomModel = GameObject.Find("menu_RoomModel").transform;
         menuLoaded = false;
@@ -80,11 +84,15 @@ public class UIManager : MonoBehaviour
     {
         // Move the buttons in
         Vector3 b_currentPosition = menu_ButtonsParent.position;
-        LeanTween.move(menu_ButtonsParent.gameObject, new Vector3(200f, b_currentPosition.y, b_currentPosition.z), 1f).setEase(LeanTweenType.easeInQuad);
+        LeanTween.move(menu_ButtonsParent.gameObject, new Vector3(200f, b_currentPosition.y, b_currentPosition.z), 0.3f).setEase(LeanTweenType.easeInQuad);
 
         // Move the model in
         Vector3 m_currentPosition = menu_RoomModel.position;
-        LeanTween.move(menu_RoomModel.gameObject, new Vector3(m_currentPosition.x, -5f, m_currentPosition.z), 1f).setEase(LeanTweenType.easeInQuad);
+        LeanTween.move(menu_RoomModel.gameObject, new Vector3(m_currentPosition.x, -4f, m_currentPosition.z), 0.5f).setEase(LeanTweenType.easeInQuad);
+
+        // Move the logo in
+        Vector3 l_currentPosition = menu_Logo.position;
+        LeanTween.move(menu_Logo.gameObject, new Vector3(350f, l_currentPosition.y, l_currentPosition.z), 0.7f).setEase(LeanTweenType.easeInQuad);
 
         menuLoaded = true;
     }
@@ -95,4 +103,6 @@ public class UIManager : MonoBehaviour
         if (isOpen) dialogue_Background.color = Color.Lerp(a_full, a_zero, Time.deltaTime * 1f);
         else dialogue_Background.color = Color.Lerp(a_zero, a_full, Time.deltaTime * 1f);
     }
+
+
 }
