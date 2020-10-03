@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private GameState state;
+    public GameState state;
 
     private UIManager UI;
     private GameInput game;
     private Dialogue dialogue;
     private Pause pause;
+    private Puzzle puzzle;
 
 
     public enum GameState
@@ -17,26 +18,8 @@ public class InputManager : MonoBehaviour
         UI,
         GAME,
         DIALOGUE,
-        PAUSE
-    }
-
-    private void Update()
-    {
-        switch(state)
-        {
-            case GameState.UI:
-                // UIManager.Initiate();
-                break;
-            case GameState.GAME:
-                // Game.Initiate();
-                break;
-            case GameState.DIALOGUE:
-                // Dialogue.Initiate();
-                break;
-            case GameState.PAUSE:
-                // Pause.Initiate();
-                break;
-        }
+        PAUSE,
+        PUZZLE
     }
 
 
