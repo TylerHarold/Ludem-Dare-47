@@ -9,9 +9,9 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
-/[Cc]odeman/
-/[Aa]ron/
-/[Tt]yler/
+/[Aa]ssets/[Cc]odeman/
+/[Aa]ssets/[Aa]ron/
+/[Aa]ssets/[Tt]yler/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
@@ -64,5 +64,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-
 LD 47/Library/
+
+LD 47/obj/
