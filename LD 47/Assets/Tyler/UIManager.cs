@@ -149,5 +149,4 @@ public class UIManager : MonoBehaviour
         else keycode_Parent.SetActive(false);
     }
 
-
 }
