@@ -36,14 +36,22 @@ public class PuzzleManager : MonoBehaviour
     {
         // Numbers will be converted from int to string
         // I think it'll be better to add, remove and check as a string than an int?
-        if (keycode_Text.text.Length < 5) keycode_Text.text += number.ToString();
+        if (input.state == InputManager.GameState.PUZZLE)
+            if (keycode_Text.text.Length < 5) keycode_Text.text += number.ToString();
+
     }
 
-    public bool KeycodeCheckCode(KeycodeObj keycodeObj)
+    public void KeycodeCheckCode(KeycodeObj keycodeObj, GameObject doorObj)
     {
         // Function placed on button click
-        if (keycode_Text.text == keycodeObj.keycode.ToString()) return true;
-        else return false;
+        if (keycode_Text.text == keycodeObj.keycode.ToString())
+        {
+            // Toggle Keycode UI
+            ui.ToggleKeycodePuzzle();
+
+            // Destroy the door to pass through
+            Destroy(doorObj);
+        }
     }
 
     public void KeycodeClear()
