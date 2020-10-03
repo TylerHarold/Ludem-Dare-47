@@ -59,9 +59,9 @@ public class UIManager : MonoBehaviour
         menu_ButtonsParent.position = Vector3.Lerp(currentPosition, destinationPosition, Time.deltaTime * 1f);
     }
 
-    public void LoadDialogue()
+    public void ToggleDialogue()
     {
-        bool isOpen = (dialogue_Background.color.a == 255) ? true : false;
+        bool isOpen = (dialogue_Background.color.a != 0) ? true : false;
         if (isOpen) dialogue_Background.color = Color.Lerp(a_full, a_zero, Time.deltaTime * 1f);
         else dialogue_Background.color = Color.Lerp(a_zero, a_full, Time.deltaTime * 1f);
     }
